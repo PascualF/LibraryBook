@@ -9,7 +9,19 @@
 <body>
     <div class="modal">
         <div class="container-modal">
-
+            <button class="closeModal">X</button>
+            <form action="#">
+                <label for="bookName">Book name:</label>
+                <input type="text" name="bookName" class="book-name">
+                <br>
+                <label for="authorName">Author Name</label>
+                <input type="text" name="authorName" class="book-author">
+                <br>
+                <label for="pagesInfo">Pages Infos:</label>
+                <input type="text" name="pagesInfos" class="book-pages">
+                <br>
+                <button type="submit" class="btnSubmit">Submit</button>
+            </form>
         </div>
     </div>
     <div class="main">
@@ -21,6 +33,7 @@
                 <th>Author</th>
                 <th>Pages</th>
                 <th>Remove</th>
+                <th>Read</th>
             </tr>
         </table>
     </div>
