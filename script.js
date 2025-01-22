@@ -1,6 +1,7 @@
 const ul = document.querySelector('ul');
 const btnAddBook = document.querySelector('.addBook');
 const table = document.querySelector('table');
+const tableBody = document.querySelector('tbody')
 const btnSubmit = document.querySelector('.btnSubmit');
 const bookName = document.querySelector(".book-name");
 const bookAuthor = document.querySelector(".book-author");
@@ -8,7 +9,6 @@ const bookPages = document.querySelector(".book-pages");
 const modal = document.querySelector(".container-modal");
 const closeModal = document.querySelector(".closeModal");
 
-const read = false;
 let countBooks = 0
 
 const myLibrary = [
@@ -65,12 +65,13 @@ const updateLibrary = () => {
         td1.textContent = book.title;
         td2.textContent = book.author;
         td3.textContent = book.pages;
+        td5.classList.add('readingBook')
         td5.textContent = 'Not read yet';
         btnEl.textContent = `X`;
         btnEl.classList.add('deleteBtn');
         btnRead.textContent = `Read it?`;
         btnRead.classList.add('readBtn');
-        table.appendChild(tr)
+        tableBody.appendChild(tr)
         tr.appendChild(td1);
         tr.appendChild(td2);
         tr.appendChild(td3);
@@ -81,19 +82,39 @@ const updateLibrary = () => {
     })
 }
 
+const deleteTable = () => {
+    tableBody.innerHTML = ""
+}
+
 const rowDelete = (e) => {
     if (!e.target.classList.contains('deleteBtn')) {
         return;
     }
 
+    const searchTitle = e.view.newBookAdd.title
+    const searchIndex = myLibrary.findIndex((b) => b.title === searchTitle)
+    myLibrary.splice(searchIndex, 1)
+    console.log(myLibrary)
     const btn = e.target;
+    //const searchIndex = myLibrary.findIndex((b) => )
     btn.closest('tr').remove()
 }
 
+const rowReadIt = (e) => {
+    if (!e.target.classList.contains('readBtn')) {
+        return;
+    }
+
+    const readText = e.target.offsetParent;
+    readText.textContent = `Book Read!`
+}
+
 table.addEventListener('click', rowDelete);
+table.addEventListener('click', rowReadIt);
 
 btnAddBook.addEventListener('click', (e) => {
     modal.style.display = 'flex';
+    deleteTable();
 })
 
 btnSubmit.addEventListener('click', (e) => {
@@ -103,13 +124,8 @@ btnSubmit.addEventListener('click', (e) => {
     bookAuthor.value = '';
     bookPages.value = '';
     newBookAdd = addingBook.newBook
-    //console.log(newBookAdd)
-    
-    //console.log(myLibrary.length)
     myLibrary.push(addingBook.newBook)
-    console.log(myLibrary[0].title)
-    table.remove()
-    updateLibrary()
+    updateLibrary();
     modal.style.display = 'none';
 });
 
