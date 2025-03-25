@@ -119,14 +119,19 @@ btnAddBook.addEventListener('click', (e) => {
 
 btnSubmit.addEventListener('click', (e) => {
     e.preventDefault();
-    const addingBook = new Book(bookName.value, bookAuthor.value, bookPages.value);
-    bookName.value = '';
-    bookAuthor.value = '';
-    bookPages.value = '';
-    newBookAdd = addingBook.newBook
-    myLibrary.push(addingBook.newBook)
-    updateLibrary();
-    modal.style.display = 'none';
+    if(!bookName.checkValidity() || !bookAuthor.checkValidity() || !bookPages.checkValidity()){
+        alert('No fields should empty')
+    } else {
+        const addingBook = new Book(bookName.value, bookAuthor.value, bookPages.value);
+        bookName.value = '';
+        bookAuthor.value = '';
+        bookPages.value = '';
+        newBookAdd = addingBook.newBook
+        myLibrary.push(addingBook.newBook)
+        updateLibrary();
+        modal.style.display = 'none';
+    }
+    
 });
 
 closeModal.addEventListener('click', (e) => {
